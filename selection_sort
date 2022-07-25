@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+void
+selection_sort (int arr[], int n)
+{
+  for (int i = 0; i <= n - 2; i++)
+    {
+      int imin = i;
+      for (int j = i + 1; j <= n - 1; j++)
+	{
+	  if (arr[j] < arr[imin])
+	    {
+	      imin = j;
+	    }
+	}
+      int temp = arr[i];
+      arr[i] = arr[imin];
+      arr[imin] = temp;
+    }
+}
+
+int
+main ()
+{
+    clock_t start, end;
+    int n;
+    int a[20000];
+    int choice;
+     while(1)
+    {
+        printf("enter 1 to enter your array, enter 2 to calculate time taken from elements from n=1000 to 10000, enter 3 to exit");
+        scanf("%d", &choice);
+        switch(choice)
+        {
+   case 1: printf("Enter the number of elements\n");
+    scanf("%d", &n);
+printf("enter the elements\n");
+for(int i=0;i<n;i++){
+      scanf("%d",&a[i]);
+    }
+start=clock();    
+selection_sort(a, n);
+end=clock();
+for(int i=0; i<n;i++)
+{
+    printf("%d\n", a[i]);
+}
+    printf("time taken to execute is %f/n", difftime(end,start)/CLOCKS_PER_SEC);
+    break;
+    
+ case 2: n=1000;
+	       while(n<=10000) {
+	       for( int i=0;i<n;i++)
+		  {
+		    //a[i]=random(1000);
+		    a[i]=n-i;
+		  }
+	       start=clock();
+	       selection_sort(a,n);
+          //Dummy loop to create delay
+	   for( int j=0;j<500000;j++){int temp=38/600;}
+              end=clock();
+printf("\n Time taken to sort %d numbers is %f Secs",n, (((double)(end-start))/CLOCKS_PER_SEC));
+	             n=n+1000;
+}
+break;
+case 3: exit(0);
+break;
+}
+}
+}
