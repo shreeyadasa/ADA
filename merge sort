@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+
+void merge(int arr[],int low, int high)
+{
+    int i,j,k,c[100];
+    int mid=(low+high)/2;
+    i=low;
+    k=low;
+    j=mid+1;
+    while(i<=mid && j<=high)
+    {
+        if(arr[i]<arr[j])
+        {
+            c[k++]=arr[i++];
+        }else
+        c[k++]=arr[j++];
+    }
+    while(i<=mid)
+    {
+        c[k++]=arr[i++];
+    }
+    while(j<=high)
+    {
+        c[k++]=arr[j++];
+    }
+    for(i=low; i<=high;i++)
+    {
+        arr[i]=c[i];
+    }
+}
+
+void mergesort(int arr[], int low, int high)
+{
+    if (low<high)
+    {
+        int mid=(low+high)/2;
+        mergesort(arr,low,mid);
+        mergesort(arr,mid+1,high);
+        merge(arr,low,high);
+    }
+}
+
+int main(){
+    clock_t start, end;
+    int n;
+     int arr[20000];
+    int choice;
+    while(1)
+    {
+        printf("enter 1 to enter your array, enter 2 to calculate time taken from elements from n=1000 to 10000, enter 3 to exit");
+        scanf("%d", &choice);
+        switch(choice)
+        {
+            
+    case 1:printf("enter the number of elements");
+    scanf("%d", &n);
+    printf("enter the elements of the array");
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+    //random input
+    //for(int i=0; i<n;i++)
+    //{
+      //  arr[i]=rand();
+    //}
+    start=clock();
+    mergesort(arr,0,n-1);
+    end=clock();
+    printf("the sorted elements are:");
+    for(int i=0;i<n;i++)
+    {
+        printf("%d\n", arr[i]);
+    }
+    printf("the time taken is %f\n", difftime(end,start)/CLOCKS_PER_SEC);
+    break;
+    
+    case 2: n=500;
+    while(n<=70000)
+    {
+        for(int i=0; i<n; i++)
+        {
+            arr[i]=n-1;
+        }
+        start=clock();
+        mergesort(arr,0,n-1);
+        end=clock();
+        printf("the time taken to sort %d elements is %f\n",n, difftime(end,start)/CLOCKS_PER_SEC);
+        n=n+500;
+    }
+    break;
+    
+    case 3: exit(0);
+    break;
+        }
+    }
+    
+}
