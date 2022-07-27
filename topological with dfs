@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+int a[10][10], n,reach[10], arr[10], j=0;
+
+void dfs( int v)
+{
+    reach[v]=1;
+    for(int i=0;i<n;i++)
+    {
+        if(reach[i]==1 && a[i][j]==1)
+        dfs(i);
+    }
+    arr[j++]=v;
+}
+
+void main()
+{
+    int m, u,v;
+    printf("enter no of vertices\n");
+    scanf("%d", &n);
+    for(int i=1; i<=n; i++)
+    {
+        for(j=1;j<n;j++)
+        {
+            a[i][j]=0;
+        }
+    }
+    printf("enter no of edges");
+    scanf("%d", &m);
+    for(int i=1;i<m;i++)
+    {
+        printf("enter an edge");
+        scanf("%d %d", &u, &v);
+        a[u][v]=1;
+    }
+    for(int i=1;i<=n;i++)
+    reach[i]=0;
+    for(int i=1;i<=n;i++)
+    {
+        if(reach[i]==0)
+        dfs(i);
+    }
+    printf("topological order\n");
+    for(int i=n-1; i>=0; i--)
+    printf("%d\n", arr[i]);
+}
