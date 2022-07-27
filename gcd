@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+int gcd(int m, int n)
+{
+    if(n==0)
+    return m;
+    return gcd(n,m%n);
+}
+
+int main()
+{
+    clock_t start, end;
+    int m,n;
+    printf("enter two numbers");
+    scanf("%d %d", &m, &n);
+    start=clock();
+    int result =gcd(m,n);
+    for(int i=0;i<50000000; i++)
+    {
+        int temp=38/600;
+    }
+    end=clock();
+    printf("the result is %d\n",result);
+    printf("time taken is %f", difftime(end,start)/CLOCKS_PER_SEC);
+}
