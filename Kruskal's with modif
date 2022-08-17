@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<time.h>
+#include<sys/resource.h>
+int cost[20][20],parent[10],i,j,n,x,y,min;
+int flag = 0;
+int count = 0;
+int tot = 0;
+int findmin()
+{
+    min = 999;
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            if(min>cost[i][j])
+            {
+                min = cost[i][j];
+                x = i;
+                y = j;
+            }
+        }
+    }
+}
+int checkcycle(int x,int y)
+{
+    while(parent[x]!=0)
+	  {
+	    x=parent[x];
+	  }
+	  while(parent[y]!=0)
+	  {
+	    y=parent[y];
+	  }
+	  
+	  if(x!=y){
+	      parent[y]=x;
+	      return 1;
+	  }
+	  else{
+	      return 0;
+	  }
+}
+void kruskal()
+{
+    while(count!=n-1 && min!=999)
+    {
+        findmin();
+        flag = checkcycle(x,y);
+        if(flag == 1)
+        {
+            printf("%d -> %d = %d \n",x,y,cost[x][y]);
+            count++;
+            tot += cost[x][y];
+        }else{
+             printf("Cycle is detected hence not included :: %d -> %d=weight=%d\n",x,y,cost[x][y]);
+        }
+        cost[x][y] = cost[y][x] = 999;
+    }
+    printf("Total cost of minimum spanning tree: %d \n",tot);
+}
+void main()
+{
+    printf("Enter the total number of nodes in the graph: \n");
+    scanf("%d",&n);
+    printf("Enter the cost adjacency matrix: \n");
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            scanf("%d",&cost[i][j]);
+            if(cost[i][j]==0){
+                cost[i][j]=999;
+            }
+        }
+        parent[i] = 0;
+    }
+    kruskal();
+    
+}
