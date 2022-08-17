@@ -1,0 +1,71 @@
+//knapsack
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+
+
+int max(int a,int b)
+{
+    if(a>b)
+    return a;
+    else
+    return b;
+}
+void knapsack(int w[], int p[],int s, int n)
+{
+    int k[n+1][s+1];
+    int i,j,res=0;
+    int count=0;
+    for(i=0;i<=n;i++)
+    {
+        for(j=0;j<=s;j++)
+        {
+            if(i==0 || j==0)
+            k[i][j]=0;
+           else if(w[i-1]<=j)
+            {
+                k[i][j]=max(p[i-1]+k[i-1][j-w[i-1]], k[i-1][j]);
+            }
+            else
+            k[i][j]=k[i-1][j];
+        }
+    }
+    res=k[n][s];
+    printf("the max value that can be obtained is :%d\n", res);
+    j=s;
+    printf("the weights of the objects obtained are\n");
+    for(i=n;i>0 && res>0;i--)
+    {
+        if(res==k[i-1][j])
+        continue;
+        
+        else{
+            count++;
+        printf("%d", w[i-1]);
+        res=res-p[i-1];
+        j=j-w[i-1];
+        } 
+    }
+    printf("\nCount of objects: %d ",count);
+}
+
+int main()
+{
+    int w[10],p[10],s,n;
+    printf("enter the no of objects");
+    scanf("%d", &n);
+    printf("ENter the size of the bag");
+    scanf("%d", &s);
+    printf("Enter the weights of the objects");
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d", &w[i]);
+    }
+    printf("enter the profits of the objects");
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d", &p[i]);
+    }
+    knapsack(w,p,s,n);
+}
